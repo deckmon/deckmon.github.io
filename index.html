@@ -1,0 +1,224 @@
+<html>
+    <head>
+        <title>&gt; weMeow &lt;</title>
+        <style>
+            #container{
+                width: 600px;
+                margin: 0 auto;
+            }
+            #svg_main{
+                border: solid 1px lightgrey;
+                width: 300px;
+                height: 300px;
+                margin: 20px 0;
+                display: block;
+            }
+            .dna{
+                width: 340px;
+            }
+            .label{
+                width: 80px;
+                display: inline-block;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container">
+            <h3><svg id="logo" height="32" viewBox="0 0 16 16" width="32"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg> &gt; weMeow &lt;</h3>
+            <div>
+                <div>
+                    <span class="label">DNA Len:</span> <input id="dna_length" class="dna" type="number" value="200">
+                </div>
+                <div>
+                    <span class="label">Father:</span> <input id="father" class="dna" type="text"> <input type="button" class="dna_random" value="Random"> <input type="button" class="dna_pure" value="Pure">
+                </div>
+                <div>
+                    <span class="label">Mother:</span> <input id="mother" class="dna" type="text"> <input type="button" class="dna_random" value="Random"> <input type="button" class="dna_pure" value="Pure">
+                </div>
+                <div>
+                    <span class="label">Child:</span> <input id="child" class="dna" type="text"> <br>
+                    <span class="label"></span> <input type="button" class="dna_born" value="Born"> <input type="button" class="dna_be_father" value="Be Father"> <input type="button" class="dna_be_mother" value="Be Mother"> <input type="button" class="dna_random" value="Random"> <input type="button" class="dna_pure" value="Pure">
+                </div>
+            </div>
+            <div>
+                <svg id="svg_main">
+                    <g id="svg_background"></g>
+                    <g id="svg_shade">
+                        <clipPath id="clip_path_shade">
+                            <path id="shade" fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                        </clipPath>
+                    </g>
+                    <g id="svg_shaded" clip-path="url(#clip_path_shade)"></g>
+                    <g id="svg_shade_board">
+                        <path id="shade_board" fill="none" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                    </g>
+                </svg>
+            </div>
+        </div>
+        <script
+          src="https://code.jquery.com/jquery-1.12.4.min.js"
+          integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+          crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js"></script>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script>
+            $(function(){
+                var get_dna_length = function(){
+                    return $("#dna_length").val();
+                }
+                
+                var pad = function(num, size) {
+                    var s = num+"";
+                    while (s.length < size) s = "0" + s;
+                    return s;
+                }
+                
+                var single_dna_normalize = function(single_dna){
+//                     single_dna = +single_dna;
+                    if(!single_dna){
+                        return "0".repeat(get_dna_length());
+                    }
+                    return pad(single_dna, get_dna_length()).slice(0, get_dna_length());
+                }
+                
+                var dna_normalize = function(dna){
+                    if(!dna){
+                        return "0".repeat(get_dna_length()) + "," + "0".repeat(get_dna_length());
+                    }
+                    dna = ""+dna;
+                    dna = dna.split(",");
+                    return single_dna_normalize(dna[0]) + "," + single_dna_normalize(dna[1]);
+                }
+                
+                var create_single_dna = function(){
+                    var single_dna = "";
+                    for(var i=0; i<get_dna_length(); i++){
+                        single_dna += ""+Math.floor(Math.random() * 10);
+                    }
+                    return single_dna;
+                }
+                
+                var create_dna = function(){
+                    return create_single_dna() + "," + create_single_dna();
+                }
+                
+                var born_dna = function(father, mother){
+                    father = dna_normalize(father).split(",");
+                    mother = dna_normalize(mother).split(",");
+                    var child_visible = "";
+                    var child_hidden = "";
+                    for(var i=0; i<father[0].length; i++){
+                        var res = _.sampleSize([
+                            father[0][i],
+                            father[1][i],
+                            mother[0][i],
+                            mother[1][i]
+                        ], 2);
+                        child_visible += res[0];
+                        child_hidden += res[1];
+                    }
+                    return child_visible + "," + child_hidden;
+                }
+                
+                
+                var new_w = $("#svg_main").width();
+                var w = 16;
+                var h = 16;
+                var padding = new_w / 10;
+                var svg_shaded = d3.select("#svg_shaded")
+                    .attr("transform", "translate(" + padding + "," + padding + ") scale(" + (new_w - padding * 2) / 16 + ")");
+                var svg_shade_board = d3.select("#svg_shade_board")
+                    .attr("transform", "translate(" + padding + "," + padding + ") scale(" + (new_w - padding * 2) / 16 + ")");
+                var svg_background = d3.select("#svg_background")
+                    .attr("transform", "translate(0, 0) scale(" + (new_w / 16) + ")");
+                
+                svg_shade_board.select("#shade_board")
+                    .attr("stroke-width", 2 * w / new_w)
+                    .attr("stroke", "lightgrey");
+                
+                var x_num = 15;
+                var y_num = 15;
+                
+                var x_w = w / x_num;
+                var y_h = h / y_num;
+                
+                var get_dna_scale = function(){
+                    return d3.scaleLinear()
+                        .domain([0, x_num * y_num])
+                        .range([0, get_dna_length()]);
+                }
+                
+                var data = [];
+                
+                for(var y=0; y<y_num; y++){
+                    for(var x=0; x<x_num; x++){
+                        data.push(0);
+                    }
+                }
+                
+                var create_rect = function(svg_container){
+                    svg_container.selectAll("rect")
+                        .data(data)
+                        .enter().append("rect")
+                        .attr("x", function(d, i){
+                            return (i % x_num) * x_w;
+                        })
+                        .attr("y", function(d, i){
+                            return Math.floor(i / x_num) * y_h;
+                        })
+                        .attr("width", x_w)
+                        .attr("height", y_h);
+                }
+                var update_rect = function(svg_container, s, l){
+                    svg_container.selectAll("rect")
+                        .data(data)
+                        .attr("fill", function(d, i){
+                            return d3.hsl(d * 360, s, l);
+                        });
+                }
+                
+                create_rect(svg_shaded);
+                create_rect(svg_background);
+
+                var update_svg = function(){
+                    var child = dna_normalize($("#child").val()).split(",")[0];
+                    
+                    for(var y=0; y<y_num; y++){
+                        for(var x=0; x<x_num; x++){
+                            data[y * x_num + x] = (+child[Math.floor(get_dna_scale()(y * x_num + x))]) / 10;
+                        }
+                    }
+                    
+                    update_rect(svg_shaded, 0.5, 0.5);
+                    update_rect(svg_background, 0.5, 0.97);
+                }
+
+                update_svg();
+
+                $(".dna_random").click(function(){
+                    $(this).siblings(".dna").val(create_dna());
+                    update_svg();
+                });
+                $(".dna_pure").click(function(){
+                    var dna_visible = dna_normalize($(this).siblings(".dna").val()).split(",")[0];
+                    $(this).siblings(".dna").val(dna_visible + "," + dna_visible);
+                });
+                $(".dna_be_father").click(function(){
+                    $("#father").val($("#child").val());
+//                     $("#child").val("");
+                })
+                $(".dna_be_mother").click(function(){
+                    $("#mother").val($("#child").val());
+//                     $("#child").val("");
+                })
+                $(".dna_born").click(function(){
+                    $("#child").val(born_dna($("#father").val(), $("#mother").val()));
+                    update_svg();
+                });
+                $("#child").change(function(){
+                    update_svg();
+                });
+            })
+        </script>
+    </body>
+</html>
