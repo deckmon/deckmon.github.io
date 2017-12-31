@@ -108,12 +108,16 @@
                     var child_visible = "";
                     var child_hidden = "";
                     for(var i=0; i<father[0].length; i++){
-                        var res = _.sampleSize([
-                            father[0][i],
-                            father[1][i],
-                            mother[0][i],
-                            mother[1][i]
-                        ], 2);
+                        var res = _.shuffle([
+                            _.shuffle([
+                                father[0][i],
+                                father[1][i]
+                            ])[0],
+                            _.shuffle([
+                                mother[0][i],
+                                mother[1][i]
+                            ])[0],
+                        ]);
                         child_visible += res[0];
                         child_hidden += res[1];
                     }
