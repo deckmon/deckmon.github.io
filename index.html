@@ -49,8 +49,8 @@
                         </clipPath>
                     </g>
                     <g id="svg_shaded" clip-path="url(#clip_path_shade)"></g>
-                    <g id="svg_shade_board">
-                        <path id="shade_board" fill="none" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                    <g id="svg_shade_border">
+                        <path id="shade_border" fill="none" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
                     </g>
                 </svg>
             </div>
@@ -124,6 +124,34 @@
                     return child_visible + "," + child_hidden;
                 }
                 
+                var dna_parser = function(dna){
+                    var single_dna = dna_normalize(dna).split(",")[0];
+                    var get_sub_dna = function(locate){
+                        var start = Math.floor(locate[0] * get_dna_length());
+                        var end = Math.floor(locate[1] * get_dna_length());
+                        return single_dna.slice(start, end);
+                    }
+                    var get_sub_dna_scale = function(sub_dna, range){
+                        return d3.scaleLinear()
+                            .domain([0, Math.pow(10, sub_dna.length) - 1])
+                            .range(range);
+                    }
+                    return {
+                        get_color: function(){
+                            return get_sub_dna([0, 0.8]);
+                        },
+                        get_border_width: function(){
+                            var border_width = get_sub_dna([0.8, 0.9]);
+                            var border_width_scale = get_sub_dna_scale(border_width, [2, 10]);
+                            return border_width_scale(+border_width);
+                        },
+                        get_border_color: function(){
+                            var border_color = get_sub_dna([0.9, 1]);
+                            var border_color_scale = get_sub_dna_scale(border_color, [0, 360])
+                            return d3.hsl(border_color_scale(+border_color), 0.5, 0.3);
+                        },
+                    }
+                }
                 
                 var new_w = $("#svg_main").width();
                 var w = 16;
@@ -131,12 +159,12 @@
                 var padding = new_w / 10;
                 var svg_shaded = d3.select("#svg_shaded")
                     .attr("transform", "translate(" + padding + "," + padding + ") scale(" + (new_w - padding * 2) / 16 + ")");
-                var svg_shade_board = d3.select("#svg_shade_board")
+                var svg_shade_border = d3.select("#svg_shade_border")
                     .attr("transform", "translate(" + padding + "," + padding + ") scale(" + (new_w - padding * 2) / 16 + ")");
                 var svg_background = d3.select("#svg_background")
                     .attr("transform", "translate(0, 0) scale(" + (new_w / 16) + ")");
                 
-                svg_shade_board.select("#shade_board")
+                var shade_border = svg_shade_border.select("#shade_border")
                     .attr("stroke-width", 2 * w / new_w)
                     .attr("stroke", "lightgrey");
                 
@@ -146,10 +174,10 @@
                 var x_w = w / x_num;
                 var y_h = h / y_num;
                 
-                var get_dna_scale = function(){
+                var get_color_scale = function(){
                     return d3.scaleLinear()
                         .domain([0, x_num * y_num])
-                        .range([0, get_dna_length()]);
+                        .range([0, dna_parser("").get_color().length]);
                 }
                 
                 var data = [];
@@ -185,16 +213,19 @@
                 create_rect(svg_background);
 
                 var update_svg = function(){
-                    var child = dna_normalize($("#child").val()).split(",")[0];
+                    var child = dna_parser($("#child").val());
                     
                     for(var y=0; y<y_num; y++){
                         for(var x=0; x<x_num; x++){
-                            data[y * x_num + x] = (+child[Math.floor(get_dna_scale()(y * x_num + x))]) / 10;
+                            data[y * x_num + x] = (+child.get_color()[Math.floor(get_color_scale()(y * x_num + x))]) / 10;
                         }
                     }
                     
                     update_rect(svg_shaded, 0.5, 0.5);
                     update_rect(svg_background, 0.5, 0.97);
+                    
+                    shade_border.attr("stroke-width", child.get_border_width() * w / new_w)
+                        .attr("stroke", child.get_border_color());
                 }
 
                 update_svg();
